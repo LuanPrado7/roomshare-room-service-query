@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "roomshare-room-service-query", "roomshare-room-service-query\roomshare-room-service-query.csproj", "{0F95E2B0-535E-46DC-A709-20061B928C4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F95E2B0-535E-46DC-A709-20061B928C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F95E2B0-535E-46DC-A709-20061B928C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F95E2B0-535E-46DC-A709-20061B928C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F95E2B0-535E-46DC-A709-20061B928C4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14EAF69F-18DE-4F07-A5B1-1FF759549FC7}
+	EndGlobalSection
+EndGlobal
