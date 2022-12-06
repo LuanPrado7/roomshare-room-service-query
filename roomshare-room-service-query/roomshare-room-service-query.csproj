@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>roomshare_room_service_query</RootNamespace>
+	<DockerfileTag>roomshare_room_service_query</DockerfileTag>
     <UserSecretsId>1ba87875-4ff7-45e5-8741-72ca475e586a</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
