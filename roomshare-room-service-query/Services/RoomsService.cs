@@ -22,17 +22,21 @@ namespace roomshare_room_service_query.Services
                 roomstoreDatabaseSettings.Value.RoomsCollectionName);
         }
 
-        public async Task<List<Room>> GetAsync() =>
-            await _roomsCollection.Find(_ => true).ToListAsync();
+        public async Task<List<Room>> GetAsync(Guid locatorKey) =>
+            await _roomsCollection.Find(x => x.Locator.guid == locatorKey).ToListAsync();
 
-        public async Task<Room?> GetAsync(long id) =>
-            await _roomsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+        public async Task<Room?> GetAsync(long id, Guid locatorKey)
+        {
+            var filter = Builders<Room>.Filter.Eq(x => x.Id, id);
+            filter &= Builders<Room>.Filter.Eq(x => x.Locator.guid, locatorKey);
 
-        public async Task CreateAsync(Room newBook) =>
-            await _roomsCollection.InsertOneAsync(newBook);
+            return await _roomsCollection.Find(filter).FirstOrDefaultAsync();
+        }
 
-        public async Task UpdateAsync(long id, Room updatedBook) =>
-            await _roomsCollection.ReplaceOneAsync(x => x.Id == id, updatedBook);
+        public async Task CreateAsync(Room newRoom) => await _roomsCollection.InsertOneAsync(newRoom);        
+
+        public async Task UpdateAsync(long id, Room updatedRoom) =>
+            await _roomsCollection.ReplaceOneAsync(x => x.Id == id, updatedRoom);
 
         public async Task RemoveAsync(long id) =>
             await _roomsCollection.DeleteOneAsync(x => x.Id == id);

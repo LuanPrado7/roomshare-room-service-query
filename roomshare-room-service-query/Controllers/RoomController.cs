@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.ObjectPool;
+using roomshare_room_service_query.Integration;
 using roomshare_room_service_query.Model;
 using roomshare_room_service_query.Model.Kafka;
 using roomshare_room_service_query.Services;
@@ -22,13 +23,15 @@ namespace roomshare_room_service_query.Controllers
         [HttpPost("changed")]
         public async Task<ActionResult> Changed(RoomChangedRequest data)
         {
+            var locator = await AuthIntegration.GetUserByGuid(data.LocatorKey);
+
             var room = new Room()
             {
                 Id = data.Id,
                 Address = data.Address,
                 CEP = data.CEP, 
                 Description = data.Description, 
-                LocatorKey = data.LocatorKey,   
+                Locator = locator,   
                 Name = data.Name,
                 RoomKey = data.RoomKey
             };
@@ -49,19 +52,38 @@ namespace roomshare_room_service_query.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Room>> Get() => await _roomsService.GetAsync();
+        public async Task<IActionResult> Get()
+        {
+            var token = Request.Headers["Authorization"];
+            var user = await AuthIntegration.GetUser(token);
+
+            if (user == null)
+            {
+                return Unauthorized("Usuário inválido, tente novamente.");
+            }
+
+            return Ok(await _roomsService.GetAsync(user.guid));
+        }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> Get(long id)
+        public async Task<IActionResult> Get(long id)
         {
-            var book = await _roomsService.GetAsync(id);
+            var token = Request.Headers["Authorization"];
+            var user = await AuthIntegration.GetUser(token);
+
+            if (user == null)
+            {
+                return Unauthorized("Usuário inválido, tente novamente.");
+            }
+
+            var book = await _roomsService.GetAsync(id, user.guid);
 
             if (book is null)
             {
                 return NotFound();
             }
 
-            return book;
+            return Ok(book);
         }
     }
 }
